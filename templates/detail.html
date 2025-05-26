@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+
+{% block title %}{{ article.title }} - {{ site_title }}{% endblock %}
+
+{% block content %}
+<div class="article-detail">
+    <article>
+        <header>
+            <h1 class="article-title">{{ article.title }}</h1>
+        </header>
+        
+        {% if article.golden_sentence %}
+        <div class="golden-sentence">
+            <blockquote>
+                <strong>{{ article.golden_sentence }}</strong>
+            </blockquote>
+        </div>
+        {% endif %}
+        
+        {% if article.comment %}
+        <div class="comment">
+            <h3>点评</h3>
+            <p>{{ article.comment }}</p>
+        </div>
+        {% endif %}
+        
+        <div class="article-content">
+            {{ article.content | safe }}
+        </div>
+        
+        <div class="back-to-home">
+            <a href="{{ url_for('index') }}">&laquo; 返回首页</a>
+        </div>
+    </article>
+</div>
+{% endblock %}

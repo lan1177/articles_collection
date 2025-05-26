@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+
+{% block title %}服务器错误 - {{ site_title }}{% endblock %}
+
+{% block content %}
+<div class="error-page">
+    <h1>500</h1>
+    <h2>服务器错误</h2>
+    <p>抱歉，服务器遇到了一个错误。我们正在努力修复中。</p>
+    <div class="back-to-home">
+        <a href="{{ url_for('index') }}">&laquo; 返回首页</a>
+    </div>
+</div>
+{% endblock %}
