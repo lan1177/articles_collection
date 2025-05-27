@@ -108,8 +108,16 @@ class FeishuAPI:
                         "record_id": record.get("record_id"),
                         "title": fields.get("标题", ""),
                         "golden_sentence": clean_feishu_text(fields.get("金句输出", "")),
-                        "preview": clean_feishu_text(fields.get("概要内容输出", ""))
+                        "preview": clean_feishu_text(fields.get("概要内容输出", "")),
+                        "content": clean_feishu_text(fields.get("全文内容输出", "")),
+                        "origin_url": extract_link(fields.get("链接", ""))
                     }
+                    # 自动补全 origin_url
+                    if processed_record["origin_url"] and not str(processed_record["origin_url"]).startswith(("http://", "https://")):
+                        processed_record["origin_url"] = "https://" + str(processed_record["origin_url"]).lstrip('/')
+                    # 若 origin_url 为空或仅为 https://，则不显示
+                    if not processed_record["origin_url"] or processed_record["origin_url"] == "https://":
+                        processed_record["origin_url"] = None
                     processed_records.append(processed_record)
                 
                 logger.info(f"成功获取记录，数量: {len(processed_records)}")
@@ -155,8 +163,14 @@ class FeishuAPI:
                     "title": fields.get("标题", ""),
                     "golden_sentence": clean_feishu_text(fields.get("金句输出", "")),
                     "content": clean_feishu_text(fields.get("全文内容输出", "")),
-                    "origin_url": fields.get("链接", "")
+                    "origin_url": extract_link(fields.get("链接", ""))
                 }
+                # 自动补全 origin_url
+                if processed_record["origin_url"] and not str(processed_record["origin_url"]).startswith(("http://", "https://")):
+                    processed_record["origin_url"] = "https://" + str(processed_record["origin_url"]).lstrip('/')
+                # 若 origin_url 为空或仅为 https://，则不显示
+                if not processed_record["origin_url"] or processed_record["origin_url"] == "https://":
+                    processed_record["origin_url"] = None
                 logger.info(f"成功获取记录详情: {record.get('record_id')}")
                 return processed_record
             else:
@@ -183,3 +197,11 @@ def clean_feishu_text(text):
     # 去除开头的"文章标题：xxx"这一行
     result = re.sub(r'^文章标题：.*?(\n|$)', '', result)
     return result.strip()
+
+def extract_link(field):
+    # 兼容飞书多维表格的链接字段格式
+    if isinstance(field, dict):
+        return field.get("link") or field.get("text") or ""
+    if isinstance(field, str):
+        return field
+    return ""

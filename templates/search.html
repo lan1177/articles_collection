@@ -1,36 +1,25 @@
 {% extends "base.html" %}
 
-{% block title %}{{ site_title }} - 首页{% endblock %}
+{% block title %}搜索：{{ q }} - {{ site_title }}{% endblock %}
 
 {% block content %}
-<div style="display:flex;justify-content:flex-end;align-items:center;margin-bottom:24px;">
+<div style="margin-bottom:24px;">
     <form method="get" action="/search" style="display:flex;gap:8px;">
-        <input type="text" name="q" placeholder="搜索标题或正文..." style="padding:8px 16px;border-radius:16px;border:1px solid #e6e8ec;font-size:1rem;width:220px;outline:none;">
+        <input type="text" name="q" value="{{ q }}" placeholder="搜索标题或正文..." style="padding:8px 16px;border-radius:16px;border:1px solid #e6e8ec;font-size:1rem;width:220px;outline:none;">
         <button type="submit" style="background:#3a506b;color:#fff;border:none;border-radius:16px;padding:8px 20px;font-size:1rem;cursor:pointer;">查找</button>
+        <a href="/" style="margin-left:12px;color:#7b8a99;font-size:1rem;text-decoration:underline;">返回首页</a>
     </form>
 </div>
 <div class="article-list">
-    {% if articles %}
-        {% for article in articles %}
+    {% if results %}
+        {% for article in results %}
             <article class="article-card">
                 <h2 class="article-title">
                     <a href="{{ url_for('article_detail', record_id=article.record_id) }}" target="_blank">{{ article.title }}</a>
                 </h2>
-                
-                {% if article.golden_sentence %}
-                <div class="golden-sentence">
-                    <blockquote>
-                        <strong>{{ article.golden_sentence }}</strong>
-                    </blockquote>
-                </div>
-                {% endif %}
-                
-                {% if article.preview %}
                 <div class="article-preview">
-                    <p>{{ article.preview }}</p>
+                    <p>{{ article.snippet|safe }}</p>
                 </div>
-                {% endif %}
-                
                 <div class="read-more">
                     <a href="{{ url_for('article_detail', record_id=article.record_id) }}" target="_blank">阅读全文 &raquo;</a>
                 </div>
@@ -38,8 +27,8 @@
         {% endfor %}
     {% else %}
         <div class="no-articles">
-            <p>暂无文章，请稍后再来访问。</p>
+            <p>未找到相关内容，请尝试其他关键字。</p>
         </div>
     {% endif %}
 </div>
-{% endblock %}
+{% endblock %} 

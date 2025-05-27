@@ -304,3 +304,24 @@ footer {
         font-size: 20px;
     }
 }
+
+.origin-link-btn {
+    display: inline-block;
+    padding: 5px 16px;
+    background: #e6e8ec;
+    color: #3a506b;
+    border-radius: 12px;
+    font-weight: 500;
+    font-size: 0.98rem;
+    box-shadow: 0 1px 3px rgba(58,80,107,0.06);
+    transition: background 0.18s, color 0.18s;
+    border: none;
+    outline: none;
+    white-space: nowrap;
+    margin-left: 8px;
+}
+.origin-link-btn:hover, .origin-link-btn:focus {
+    background: #d1d5db;
+    color: #232a34;
+    text-decoration: none;
+}
