@@ -4,6 +4,7 @@ import time
 import logging
 from functools import wraps
 from config import Config
+import re
 
 # 配置日志记录
 logger = logging.getLogger(__name__)
@@ -106,9 +107,8 @@ class FeishuAPI:
                     processed_record = {
                         "record_id": record.get("record_id"),
                         "title": fields.get("标题", ""),
-                        "golden_sentence": fields.get("金句输出", ""),
-                        "comment": fields.get("黄叔点评", ""),
-                        "content": fields.get("概要内容输出", "")
+                        "golden_sentence": clean_feishu_text(fields.get("金句输出", "")),
+                        "preview": clean_feishu_text(fields.get("概要内容输出", ""))
                     }
                     processed_records.append(processed_record)
                 
@@ -153,9 +153,9 @@ class FeishuAPI:
                 processed_record = {
                     "record_id": record.get("record_id"),
                     "title": fields.get("标题", ""),
-                    "golden_sentence": fields.get("金句输出", ""),
-                    "comment": fields.get("黄叔点评", ""),
-                    "content": fields.get("概要内容输出", "")
+                    "golden_sentence": clean_feishu_text(fields.get("金句输出", "")),
+                    "content": clean_feishu_text(fields.get("全文内容输出", "")),
+                    "origin_url": fields.get("链接", "")
                 }
                 logger.info(f"成功获取记录详情: {record.get('record_id')}")
                 return processed_record
@@ -165,3 +165,21 @@ class FeishuAPI:
         except Exception as e:
             logger.exception(f"获取记录详情异常: {str(e)}")
             return None
+
+def clean_feishu_text(text):
+    if not text:
+        return ''
+    try:
+        obj = json.loads(text) if isinstance(text, str) else text
+        if isinstance(obj, list):
+            return '\n'.join([clean_feishu_text(item) for item in obj])
+        if isinstance(obj, dict):
+            if 'text' in obj:
+                return clean_feishu_text(obj['text'])
+            return '\n'.join([clean_feishu_text(v) for v in obj.values()])
+    except Exception:
+        pass
+    result = str(text).strip()
+    # 去除开头的"文章标题：xxx"这一行
+    result = re.sub(r'^文章标题：.*?(\n|$)', '', result)
+    return result.strip()

@@ -10,7 +10,7 @@
         </header>
         
         {% if article.golden_sentence %}
-        <div class="golden-sentence">
+        <div class="golden-sentence" style="margin-bottom: 18px;">
             <blockquote>
                 <strong>{{ article.golden_sentence }}</strong>
             </blockquote>
@@ -24,9 +24,14 @@
         </div>
         {% endif %}
         
-        <div class="article-content">
-            {{ article.content | safe }}
+        <div class="article-content" style="margin-top: 0;">
+            {{ article.content.replace('\n', '<br>') | safe }}
         </div>
+        {% if article.origin_url %}
+        <div style="margin: 32px 0 0 0; text-align: right;">
+            <a href="{{ article.origin_url }}" target="_blank" style="display:inline-block;padding:10px 28px;background:#3a506b;color:#fff;border-radius:20px;font-weight:500;font-size:1.08rem;box-shadow:0 2px 6px rgba(58,80,107,0.08);transition:background 0.18s;">查看原文 &raquo;</a>
+        </div>
+        {% endif %}
         
         <div class="back-to-home">
             <a href="{{ url_for('index') }}">&laquo; 返回首页</a>
