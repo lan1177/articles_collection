@@ -80,7 +80,7 @@ def inject_globals():
     注入全局变量到模板
     """
     return {
-        'site_title': '好文精选',
+        'site_title': 'AI knowledge base',
         'now': datetime.datetime.now()
     }
 
