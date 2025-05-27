@@ -21,14 +21,14 @@ body {
     font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "Helvetica Neue", Arial, sans-serif;
     line-height: 1.6;
     color: var(--text-color);
-    background-color: var(--background-color);
+    background-color: #f7f8fa;
 }
 
 .container {
-    width: 90%;
-    max-width: 1200px;
+    width: 100%;
+    max-width: 900px;
     margin: 0 auto;
-    padding: 0 15px;
+    padding: 0 24px;
 }
 
 a {
@@ -71,28 +71,20 @@ main {
 }
 
 /* 文章卡片 */
-.article-card {
-    background-color: var(--card-bg);
-    border-radius: 12px;
-    padding: 25px;
-    margin-bottom: 30px;
-    box-shadow: var(--shadow);
-    transition: var(--transition);
-    color: var(--text-color);
-    border: 1px solid var(--border-color);
-}
-
-.article-card:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
+.article-card, .article-detail {
+    background-color: #fff;
+    border-radius: 24px;
+    box-shadow: 0 4px 24px rgba(30,40,60,0.07);
+    border: none;
+    margin-bottom: 36px;
+    padding: 32px 32px 28px 32px;
 }
 
 .article-title {
-    font-size: 1.7rem;
-    margin-bottom: 12px;
-    line-height: 1.25;
+    font-size: 1.5rem;
     font-weight: 700;
-    color: #2d3748;
+    color: #232a34;
+    margin-bottom: 12px;
 }
 
 .article-title a {
@@ -106,11 +98,11 @@ main {
     border-left: 4px solid var(--primary-color);
 }
 
-.golden-sentence blockquote {
-    font-size: 1.15rem;
-    color: #3a506b;
+.golden-sentence blockquote, .golden-sentence blockquote strong {
+    font-weight: 400;
     font-style: italic;
-    font-weight: 600;
+    color: #3a506b;
+    font-size: 1.15rem;
     letter-spacing: 0.5px;
 }
 
@@ -121,7 +113,7 @@ main {
     border-radius: 10px;
     color: #3a506b;
     font-size: 1.05rem;
-    font-weight: 500;
+    font-weight: 400;
     box-shadow: 0 1px 4px rgba(58,80,107,0.04);
 }
 
@@ -140,12 +132,12 @@ main {
 
 .read-more a {
     display: inline-block;
-    padding: 8px 28px;
+    padding: 8px 22px;
     background-color: var(--primary-color);
     color: #fff;
-    border-radius: 20px;
+    border-radius: 16px;
     font-weight: 500;
-    font-size: 1.08rem;
+    font-size: 1rem;
     letter-spacing: 0.5px;
     box-shadow: 0 2px 6px rgba(58, 80, 107, 0.08);
     transition: background 0.18s, color 0.18s, box-shadow 0.18s, transform 0.13s;
@@ -166,22 +158,6 @@ main {
     color: #fff;
     box-shadow: 0 2px 6px rgba(58, 80, 107, 0.08);
     transform: scale(0.98);
-}
-
-/* 文章详情页 */
-.article-detail {
-    background-color: var(--card-bg);
-    border-radius: 12px;
-    padding: 30px;
-    box-shadow: var(--shadow);
-    color: var(--text-color);
-    border: 1px solid var(--border-color);
-}
-
-.article-detail .article-title {
-    font-size: 2.2rem;
-    margin-bottom: 20px;
-    line-height: 1.3;
 }
 
 .article-content {
@@ -240,9 +216,10 @@ main {
 
 /* 无文章提示 */
 .no-articles {
+    color: #b0b8c1;
+    font-size: 1.2rem;
     text-align: center;
-    padding: 50px 0;
-    color: var(--light-gray);
+    margin-top: 80px;
 }
 
 /* 页脚 */
