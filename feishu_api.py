@@ -110,7 +110,7 @@ class FeishuAPI:
                         "golden_sentence": clean_feishu_text(fields.get("金句输出", "")),
                         "preview": clean_feishu_text(fields.get("概要内容输出", "")),
                         "content": clean_feishu_text(fields.get("全文内容输出", "")),
-                        "origin_url": extract_link(fields.get("链接", ""))
+                        "origin_url": extract_link(fields.get("link") or fields.get("链接", ""))
                     }
                     # 自动补全 origin_url
                     if processed_record["origin_url"] and not str(processed_record["origin_url"]).startswith(("http://", "https://")):
@@ -163,7 +163,7 @@ class FeishuAPI:
                     "title": fields.get("标题", ""),
                     "golden_sentence": clean_feishu_text(fields.get("金句输出", "")),
                     "content": clean_feishu_text(fields.get("全文内容输出", "")),
-                    "origin_url": extract_link(fields.get("链接", ""))
+                    "origin_url": extract_link(fields.get("link") or fields.get("链接", ""))
                 }
                 # 自动补全 origin_url
                 if processed_record["origin_url"] and not str(processed_record["origin_url"]).startswith(("http://", "https://")):
